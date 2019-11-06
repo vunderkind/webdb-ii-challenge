@@ -24,14 +24,14 @@ router.get('/:id', (req, res) => {
     res.json(car);
   }) 
   .catch (err => {
-    res.status(500).json({ message: 'unable to retrieve cars with given id' });
+    res.status(500).json({ message: `Whoops! Can't find car with that id!` });
   });
 });
 
 router.post('/', (req, res) => {
   const change = req.body;
   !change
-    ? res.status(400).json({ error: 'you are missing either name or budget' })
+    ? res.status(400).json({ error: 'you are missing something' })
     : db('cars')
     .insert(change)
     .then(ids => {
@@ -42,7 +42,7 @@ router.post('/', (req, res) => {
     })
     .catch (err => {
         console.log('POST error', err);
-        res.status(500).json({ message: "uanble to add data" });
+        res.status(500).json({ message: "Sorry - can't add new car to db" });
     });
 });
 
@@ -53,7 +53,7 @@ router.put("/:id", (req, res) => {
     db("cars")
         .where({id: idz})
         .update(changes)
-        .then(count => res.status(200).json( { RecordUpdated: count, changes}))
+        .then(count => res.status(200).json( { "Car record updated": count, changes}))
         .catch(err => res.status(500).json({  message: "could not update car with given id"}))
 })
 
@@ -62,7 +62,7 @@ router.delete("/:id", (req, res) => {
     db("cars")
         .where({ id: idz})
         .del()
-        .then(accountOne => res.status(200).json({RecordDeleted: accountOne}))
+        .then(accountOne => res.status(200).json({"Car record Deleted": accountOne}))
         .catch(err => res.status(500).json({ message: "unable to delete car with given id"}))
 })
 

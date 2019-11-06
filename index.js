@@ -1,5 +1,5 @@
 const server = require('./server.js');
 
-const port = process.env.PORT || 9000;
+const port = 8000;
 
-server.listen(port, () => console.log(`\n** Running on Port ${port} **\n`));
+server.listen(port, () => console.log(`** Server eavesdropping on Port ${port} **`));
